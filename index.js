@@ -56,8 +56,17 @@ class SideMenu extends Component {
      */
     this.prevLeft = 0;
 
+
+    /**
+     * Default menu opened / closed
+     */
+    let offset = 0;
+    if (this.props.startOpen) {
+        offset = deviceScreen.width;
+    }
+
     this.state = {
-      left: new Animated.Value(0),
+      left: new Animated.Value(offset),
     };
   }
 
@@ -281,6 +290,7 @@ class SideMenu extends Component {
 }
 
 SideMenu.propTypes = {
+  startOpen: React.PropTypes.bool,
   toleranceX: React.PropTypes.number,
   toleranceY: React.PropTypes.number,
   onChange: React.PropTypes.func,
@@ -290,6 +300,7 @@ SideMenu.propTypes = {
 };
 
 SideMenu.defaultProps = {
+  startOpen: false,
   toleranceY: 10,
   toleranceX: 10,
   touchToClose: false,
