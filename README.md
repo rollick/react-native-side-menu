@@ -1,13 +1,12 @@
 ## Customizable side menu for react-native
 <p align="center">
-    <img src ="http://oi61.tinypic.com/2n9l2dz.jpg" />
+  <img src ="http://oi61.tinypic.com/2n9l2dz.jpg" />
 </p>
 
 ### Content
 - [Installation](#installation)
 - [Usage example](#usage-example)
 - [Component props](#component-props)
-- [Special thanks](#special-thanks)
 - [Questions?](#questions)
 
 ### Installation
@@ -17,10 +16,10 @@ npm install react-native-side-menu
 
 ### Usage example
 ```javascript
-var SideMenu = require('react-native-side-menu');
+const SideMenu = require('react-native-side-menu');
 
-var ContentView = React.createClass({
-  render: function() {
+class ContentView extends React.Component {
+  render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -36,11 +35,11 @@ var ContentView = React.createClass({
       </View>
     );
   }
-});
+}
 
-var Application = React.createClass({
-  render: function() {
-    var menu = <Menu navigator={navigator}/>;
+class Application extends React.Component {
+  render() {
+    const menu = <Menu navigator={navigator}/>;
 
     return (
       <SideMenu menu={menu}>
@@ -48,56 +47,33 @@ var Application = React.createClass({
       </SideMenu>
     );
   }
-});
+}
 ```
-
-Clicking on any menu item should cause closing menu. It can be done by using `menuActions` which are passed thru props to `menu` component. Example looks like this:
-
-```javascript
-var Menu = React.createClass({
-  about: function() {
-    this.props.menuActions.close();
-    this.props.navigator.push({...});
-  },
-
-  render: function() {
-    return (
-      <View>
-        <Text>Menu</Text>
-        <Text onPress={this.about}>About</Text>
-      </View>
-    );
-  }
-});
-```
-
-`menuActions` consists of following method(s):
-- `close` (Void) - Close menu
-- `toggle` (Void) - Toggle menu (close / open)
-- `open` (Void) - Open menu
 
 ### Component props
 - `menu` (React.Component) - Menu component
-- `openMenuOffset` (Number) - Content view left margin if menu is opened
+- `isOpen` (Boolean) - Props driven control over menu open state
+- `openMenuOffset` (Number) - Content view left margin if menu is opened, defaults to 2/3 of device screen width
 - `hiddenMenuOffset` (Number) - Content view left margin if menu is hidden
+- `edgeHitWidth` (Number) - Edge distance on content view to open side menu, defaults to 60
 - `toleranceX` (Number) - X axis tolerance
 - `toleranceY` (Number) - Y axis tolerance
 - `disableGestures` (Bool) - Disable whether the menu can be opened with gestures or not
+- `onStartShouldSetResponderCapture` (Function) - Function that accepts event as an argument and specify if side-menu should react on the touch or not. Check https://facebook.github.io/react-native/docs/gesture-responder-system.html for more details
 - `onChange` (Function) - Callback on menu open/close. Is passed `isOpen` as an argument
 - `menuPosition` (String) - either 'left' or 'right', defaults to 'left'
 - `animationFunction` (Function -> Object) - Function that accept 2 arguments (prop, value) and return an object:
-  - `prop` you should use at the place you specify parameter to animate;
-  - `value` you should use to specify the final value of `prop`;
+  - `prop` you should use at the place you specify parameter to animate
+  - `value` you should use to specify the final value of `prop`
 - `animationStyle` (Function -> Object) - Function that accept 1 argument (value) and return an object:
   - `value` you should use at the place you need current value of animated parameter (left offset of content view)
-- `touchToClose` (Bool) - Allows for touching the partially hidden view to close the menu. Defaults to `false`.
+- `bounceBackOnOverdraw` - when true, content view will bounce back to `openMenuOffset` when dragged further, defaults to true
 
-*In progress*
+### FAQ
 
-### Special thanks
-Creating this component has been inspired by [@khanghoang](https://github.com/khanghoang)'s [RNSideMenu](https://github.com/khanghoang/RNSideMenu) example.
+#### ScrollView does not scroll to top on status bar press
 
-Also, thanks to [@ericvicenti](https://github.com/ericvicenti) for help with figuring out with `setNativeProps`
+On iPhone, the scroll-to-top gesture has no effect if there is more than one scroll view on-screen that has scrollsToTop set to true. Since it defaults to `true` in ReactNative, you have to set `scrollsToTop={false}` on your ScrollView inside `Menu` component in order to get it working as desired.
 
 ### Questions?
 Feel free to contact me in [twitter](https://twitter.com/kureevalexey) or [create an issue](https://github.com/Kureev/react-native-side-menu/issues/new)

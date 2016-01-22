@@ -1,11 +1,8 @@
-var React = require('react-native');
+const React = require('react-native');
 
-var {
+const {
   StyleSheet,
-  Dimensions,
 } = React;
-
-var deviceScreen = Dimensions.get('window');
 
 module.exports = StyleSheet.create({
   container: {
@@ -19,8 +16,6 @@ module.exports = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: deviceScreen.width,
-    height: deviceScreen.height,
   },
   frontView: {
     flex: 1,
@@ -28,8 +23,6 @@ module.exports = StyleSheet.create({
     left: 0,
     top: 0,
     backgroundColor: 'transparent',
-    width: deviceScreen.width,
-    height: deviceScreen.height,
   },
   overlay: {
     position: 'absolute',
@@ -37,6 +30,6 @@ module.exports = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: 'transparent'
-  }
+    backgroundColor: 'transparent',
+  },
 });
